@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- ToolBar -->
+
+    <style name="circle">
+        <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="rounded_corner" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">8dp</item>
+    </style>
+
+    <style name="specific_rounded_corner">
+        <item name="cornerSizeTopLeft">19dp</item>
+        <item name="cornerSizeBottomRight">19dp</item>
+        <item name="cornerSizeTopRight">7dp</item>
+        <item name="cornerSizeBottomLeft">7dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
+    <style name="specific_rounded_corner_big">
+        <item name="cornerSizeTopLeft">29dp</item>
+        <item name="cornerSizeBottomRight">29dp</item>
+        <item name="cornerSizeTopRight">12dp</item>
+        <item name="cornerSizeBottomLeft">12dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
+    <style name="specific_rounded_corner_mini">
+        <item name="cornerSizeTopLeft">27dp</item>
+        <item name="cornerSizeBottomRight">27dp</item>
+        <item name="cornerSizeTopRight">10dp</item>
+        <item name="cornerSizeBottomLeft">10dp</item>
+        <item name="cornerFamilyTopLeft">rounded</item>
+        <item name="cornerFamilyBottomRight">rounded</item>
+    </style>
+
+    <style name="SeekBarMiniColor" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorAccent">@android:color/white</item>
+    </style>
+</resources>

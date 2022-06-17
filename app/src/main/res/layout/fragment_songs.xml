@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="songViewModelx"
+            type="com.doducvuong14061990.vplayer.ui.fragment.home.song.SongViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rcvSongsHomeFragment"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0" />
+
+        <FrameLayout
+            android:id="@+id/flMiniControlHome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layoutMarginBottom="@{songViewModelx.MNavBarHeight}"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:ignore="MissingConstraints">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvMiniControlHome"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="12dp"
+                app:cardElevation="0dp"
+                app:contentPadding="0dp">
+
+                <LinearLayout
+                    android:id="@+id/llMiniControlHome"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/teal_200"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:setBackgroundPalette="@{songViewModelx.MSongPhotoPalette}"
+                    tools:context=".ControlMiniFragment"
+                    tools:ignore="UselessParent">
+
+                    <ImageView
+                        android:id="@+id/imvMiniControlHome"
+                        android:layout_width="110dp"
+                        android:layout_height="110dp"
+                        android:onClick="@{()-> songViewModelx.setOnClickPhoto(true)}"
+                        android:scaleType="centerCrop"
+                        android:setPhotoBitmap="@{songViewModelx.MPhotoSongBitmap}"
+                        android:src="@drawable/music_medium_min"
+                        app:shapeAppearanceOverlay="@style/specific_rounded_corner_mini"
+                        app:strokeColor="@android:color/transparent"
+                        app:strokeWidth="0dp"
+                        tools:ignore="ContentDescription,MissingConstraints" />
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/llSongPlayerMiniControlHome"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingStart="10dp"
+                        android:paddingEnd="10dp">
+
+                        <LinearLayout
+                            android:id="@+id/llNameSongMiniControlHome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            app:layout_constraintTop_toTopOf="parent"
+                            tools:ignore="MissingConstraints,UseCompoundDrawables">
+
+                            <TextView
+                                android:id="@+id/tvSongNameMiniControlHome"
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:padding="5dp"
+                                android:layout_gravity="center"
+                                android:layout_weight="1"
+                                android:clickable="true"
+                                android:ellipsize="marquee"
+                                android:focusable="true"
+                                android:focusableInTouchMode="true"
+                                android:marqueeRepeatLimit="marquee_forever"
+                                android:paddingStart="10dp"
+                                android:scrollHorizontally="true"
+                                android:singleLine="true"
+                                android:text="@{songViewModelx.nameSong}"
+                                android:textColor="@color/white"
+                                android:textSize="14sp"
+                                android:textStyle="bold"
+                                tools:ignore="NestedWeights,RtlSymmetry" />
+
+                        </LinearLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:id="@+id/clButtonControlMiniControlHome"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintTop_toBottomOf="@+id/llNameSongMiniControlHome"
+                            tools:ignore="MissingConstraints">
+
+                            <ImageButton
+                                android:id="@+id/ibRepeatOneMiniControlHome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ripple_effect"
+                                android:iconImageButtonWhite="@{songViewModelx.MRepeatPattern}"
+                                android:onClick="@{() -> songViewModelx.onClickRepeat()}"
+                                android:padding="7dp"
+                                app:layout_constraintStart_toStartOf="parent"
+                                tools:ignore="ContentDescription,MissingConstraints" />
+
+                            <ImageButton
+                                android:id="@+id/ibPreviousSongMiniControlHome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{() ->songViewModelx.onClickPrevious(true)}"
+                                android:background="@drawable/ripple_effect"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_skip_previous_white"
+                                app:layout_constraintEnd_toStartOf="@+id/ibPlaySongMiniControlHome"
+                                app:layout_constraintStart_toEndOf="@id/ibRepeatOneMiniControlHome"
+                                tools:ignore="ContentDescription,MissingConstraints" />
+
+                            <ImageButton
+                                android:id="@+id/ibPlaySongMiniControlHome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/ripple_effect"
+                                android:onClick="@{() ->songViewModelx.onClickPlayOrPause(true)}"
+                                android:padding="7dp"
+                                android:src="@{songViewModelx.mPlaying? @drawable/ic_pause_white : @drawable/ic_play_white}"
+                                app:layout_constraintEnd_toStartOf="@id/ibNextSongMiniControlHome"
+                                app:layout_constraintStart_toEndOf="@id/ibPreviousSongMiniControlHome"
+                                tools:ignore="ContentDescription,MissingConstraints" />
+
+                            <ImageButton
+                                android:id="@+id/ibNextSongMiniControlHome"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{() ->songViewModelx.onClickNext(true)}"
+                                android:background="@drawable/ripple_effect"
+                                android:padding="7dp"
+                                android:src="@drawable/ic_skip_next_white"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                tools:ignore="ContentDescription,MissingConstraints" />
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <SeekBar
+                            android:id="@+id/seekBarMiniControlHome"
+                            android:layout_width="match_parent"
+                            android:layout_height="0dp"
+                            android:clickable="true"
+                            android:focusable="true"
+                            android:focusableInTouchMode="true"
+                            android:paddingBottom="5dp"
+                            android:theme="@style/SeekBarMiniColor"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintTop_toBottomOf="@+id/clButtonControlMiniControlHome"
+                            app:layout_constraintVertical_bias="1.0"
+                            tools:ignore="MissingConstraints"
+                            tools:layout_editor_absoluteX="0dp" />
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+        </FrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

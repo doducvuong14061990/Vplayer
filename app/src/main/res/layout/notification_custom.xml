@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <LinearLayout
+        android:id="@+id/llNotification"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/teal_700"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        tools:context=".ControlMiniFragment"
+        tools:ignore="UselessParent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imvNotification"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:scaleType="centerCrop"
+            app:shapeAppearanceOverlay="@style/specific_rounded_corner_mini"
+            app:strokeColor="@android:color/transparent"
+            app:strokeWidth="0dp"
+            tools:ignore="MissingConstraints" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llSongPlayerNotification"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:id="@+id/llNameSongNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:ignore="MissingConstraints,UseCompoundDrawables">
+
+                <TextView
+                    android:id="@+id/tvSongNameNotification"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_weight="1"
+                    android:clickable="true"
+                    android:ellipsize="marquee"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:marqueeRepeatLimit="marquee_forever"
+                    android:paddingStart="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
+                    android:scrollHorizontally="true"
+                    android:singleLine="true"
+                    android:text="@string/song_name"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    tools:ignore="NestedWeights,RtlSymmetry" />
+
+                <ImageButton
+                    android:id="@+id/ibCancelNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_cancel"
+                    tools:ignore="ContentDescription" />
+            </LinearLayout>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clButtonControlNotification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
+                app:layout_constraintTop_toBottomOf="@+id/llNameSongNotification"
+                tools:ignore="MissingConstraints">
+
+                <ImageButton
+                    android:id="@+id/ibRepeatOneNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_repeat_one"
+                    app:layout_constraintStart_toStartOf="parent"
+                    tools:ignore="ContentDescription,MissingConstraints" />
+
+                <ImageButton
+                    android:id="@+id/ibPreviousSongNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_skip_previous"
+                    app:layout_constraintEnd_toStartOf="@+id/ibPlaySongNotification"
+                    app:layout_constraintStart_toEndOf="@id/ibRepeatOneNotification"
+                    tools:ignore="ContentDescription,MissingConstraints" />
+
+                <ImageButton
+                    android:id="@+id/ibPlaySongNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_play"
+                    app:layout_constraintEnd_toStartOf="@id/ibNextSongNotification"
+                    app:layout_constraintStart_toEndOf="@id/ibPreviousSongNotification"
+                    tools:ignore="ContentDescription,MissingConstraints" />
+
+                <ImageButton
+                    android:id="@+id/ibNextSongNotification"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="7dp"
+                    android:src="@drawable/ic_skip_next"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:ignore="ContentDescription,MissingConstraints" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
+</layout>
