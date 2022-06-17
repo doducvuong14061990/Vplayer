@@ -11,6 +11,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat.getSystemService
@@ -33,14 +34,14 @@ import com.doducvuong14061990.vplayer.ui.fragment.home.viewmodel.HomeFragmentVie
 import com.doducvuong14061990.vplayer.ui.fragment.home.viewmodel.HomeFragmentViewModelFactory
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>() {
-    private lateinit var pagerAdapter : ScreenSlidePagerAdapter
+    private lateinit var pagerAdapter: ScreenSlidePagerAdapter
     override val layoutId: Int
         get() = R.layout.fragment_home
 
     private lateinit var homeFragmentViewModel: HomeFragmentViewModel
     private lateinit var homeFragmentViewModelFactory: HomeFragmentViewModelFactory
 
-    private lateinit var searchView: androidx.appcompat.widget.SearchView
+    private var searchView: androidx.appcompat.widget.SearchView? = null
 
     /** Callback này được gọi khi Fragment bắt đầu khởi tạo từ các dữ liệu đầu vào.
      * Khác với onCreate() của Activity, rằng bạn có thể tạo giao diện cho màn hình ở callback này,
@@ -89,6 +90,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     private fun setupViewPager() {
         pagerAdapter = ScreenSlidePagerAdapter(requireActivity())
         binding.viewPagerHome.adapter = pagerAdapter
+
+        /** Trả lại FULL Songs sau khi quay lại từ PlayerFragment() sau khi đã SEARCH nhạc... */
+        pagerAdapter.songFragment.searchAction?.invoke("")
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -131,20 +135,35 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
         inflater.inflate(R.menu.menu_home_toolbar_home, menu)
         val searchManager: SearchManager =
             requireContext().getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        (menu.findItem(R.id.searchHome)?.actionView as? androidx.appcompat.widget.SearchView)?.apply {
+        searchView =
+            menu.findItem(R.id.searchHome)?.actionView as? androidx.appcompat.widget.SearchView
+        searchView?.apply {
+            this.setOnSearchClickListener { p0 ->
+                if (p0?.id == R.id.searchHome) {
+                    binding.toolbarTitleHome.visibility = View.GONE
+                }
+            }
+
+            this.setOnCloseListener(object : SearchView.OnCloseListener,
+                androidx.appcompat.widget.SearchView.OnCloseListener {
+                override fun onClose(): Boolean {
+                    binding.toolbarTitleHome.visibility = View.VISIBLE
+                    return false
+                }
+            })
+
             setSearchableInfo(searchManager.getSearchableInfo(requireActivity().componentName))
             maxWidth = Int.MAX_VALUE
             setOnQueryTextListener(object :
                 androidx.appcompat.widget.SearchView.OnQueryTextListener {
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     /** Truyền các ký tự người dùng nhập vào sang SongsFragment() */
-//                musicAdapter.filter.filter(query)
+                    Toast.makeText(requireContext(), "onQueryTextSubmit", Toast.LENGTH_SHORT).show()
                     return false
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
                     /** Truyền các ký tự người dùng nhập vào sang SongsFragment() */
-//                musicAdapter.filter.filter(newText)
                     pagerAdapter.songFragment.searchAction?.invoke(newText.toString())
                     return false
                 }
@@ -155,6 +174,11 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
 
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.searchHome -> {
+                binding.toolbarTitleHome.visibility = View.GONE
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 

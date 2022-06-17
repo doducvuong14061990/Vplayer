@@ -71,7 +71,6 @@ class PlayerViewModel() : ViewModel() {
         _mClickPlayOrPause.value = false
         _mClickPrevious.value = false
         _mClickNext.value = false
-
         _mRepeatPattern.value = 0
     }
 

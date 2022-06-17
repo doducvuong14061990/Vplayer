@@ -142,7 +142,10 @@ class PlayerFragment : BaseFragment<FragmentPlayerBinding>() {
 
     private fun registerBroadcastReceiver() {
         LocalBroadcastManager.getInstance(requireContext())
-            .registerReceiver(broadcastReceiver, IntentFilter("Send_Data_Vs_Action_To_PlayerFragment"))
+            .registerReceiver(
+                broadcastReceiver,
+                IntentFilter("Send_Data_Vs_Action_To_PlayerFragment")
+            )
     }
 
     private fun handleFromStartPoint() {
@@ -164,6 +167,7 @@ class PlayerFragment : BaseFragment<FragmentPlayerBinding>() {
         }
     }
 
+    /** Kết nối Service để player file nhạc từ SongsFragment() gửi qua... */
     private fun handleNavigationFromSongsFragment() {
         val songs: Songs? = arguments?.getParcelable("songs")
         val position: Int? = arguments?.getInt("position", -1)

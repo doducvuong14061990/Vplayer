@@ -9,26 +9,19 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import com.doducvuong14061990.vplayer.BR
+import com.doducvuong14061990.vplayer.data.model.Song
 
 abstract class BaseAdapter<T>(private val itemClickListener: OnItemClickListener<T>) : RecyclerView.Adapter<BaseAdapter<T>.ViewHolder>() {
 
-    private var mMusicList : ArrayList<T> = ArrayList()
-    private var mMusicListOld : ArrayList<T> = ArrayList()
+     var mDataList : ArrayList<T> = ArrayList()
 
-    @SuppressLint("NotifyDataSetChanged")
-    fun addData(mMusicList: ArrayList<T>) {
-        this.mMusicList = mMusicList
-        this.mMusicListOld = mMusicList
-        notifyDataSetChanged()
-    }
-
-    override fun getItemCount(): Int =  mMusicList.size
+    override fun getItemCount(): Int =  mDataList.size
 
     override fun getItemViewType(position: Int): Int {
         return getLayoutIdForPosition(position)
     }
     abstract fun getLayoutIdForPosition(position: Int): Int
-    private fun getItemForPosition(position: Int): T = mMusicList[position]
+    private fun getItemForPosition(position: Int): T = mDataList[position]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding =  DataBindingUtil.inflate<ViewDataBinding>(
@@ -44,7 +37,7 @@ abstract class BaseAdapter<T>(private val itemClickListener: OnItemClickListener
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val itemForPosition : T = getItemForPosition(position)
         holder.itemView.setOnClickListener {
-            itemClickListener.onItemClick(position)
+            itemClickListener.onItemClick(mDataList[position])
         }
         holder.bind(itemForPosition)
     }

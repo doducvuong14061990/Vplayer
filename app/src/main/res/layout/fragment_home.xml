@@ -24,6 +24,7 @@
                 android:id="@+id/appbarHome"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:backgroundTint="@android:color/transparent"
                 android:background="@android:color/transparent"
                 app:elevation="0dp">
 
@@ -32,7 +33,6 @@
                     android:layoutMarginTop="@{homeFragmentViewModelx.MStatusBarHeight}"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
                     android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
                     app:menu="@menu/menu_home_toolbar_home"
                     app:popupTheme="@style/Theme.AppCompat.Light">

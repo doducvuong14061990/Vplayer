@@ -34,12 +34,13 @@ import com.doducvuong14061990.vplayer.service.VplayerService
 import com.doducvuong14061990.vplayer.ui.adapter.SongAdapter
 
 class SongsFragment : BaseFragment<FragmentSongsBinding>() {
-    companion object{
-        private var instance : SongsFragment? = null
-
+    companion object {
+        private var instance: SongsFragment? = null
         fun getInstance() = instance ?: SongsFragment().also { instance = it }
     }
-    var searchAction : ((String)->Unit)? = null
+
+    var searchAction: ((String) -> Unit)? = null
+
     private val player: MediaPlayerSingleton = MediaPlayerSingleton.getInstance()
 
     private var isServiceConnected: Boolean = false
@@ -59,9 +60,6 @@ class SongsFragment : BaseFragment<FragmentSongsBinding>() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        searchAction = {str->
-            Log.d("SangTB", "onViewCreated: $str")
-        }
     }
 
     private var broadcastReceiver: BroadcastReceiver = object : BroadcastReceiver() {
@@ -105,7 +103,10 @@ class SongsFragment : BaseFragment<FragmentSongsBinding>() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         LocalBroadcastManager.getInstance(requireContext())
-            .registerReceiver(broadcastReceiver, IntentFilter("Send_Data_Vs_Action_To_SongsFragment"))
+            .registerReceiver(
+                broadcastReceiver,
+                IntentFilter("Send_Data_Vs_Action_To_SongsFragment")
+            )
         Log.d("ABC", "onCreate Songs")
     }
 
@@ -147,7 +148,7 @@ class SongsFragment : BaseFragment<FragmentSongsBinding>() {
     private fun handleConnectedBoundService() {
         if (isServiceConnected) {
             initUiControlFragment()
-        }else{
+        } else {
             startBoundService()
         }
     }
@@ -191,8 +192,8 @@ class SongsFragment : BaseFragment<FragmentSongsBinding>() {
             }
         }
 
-        viewModel.mOnClickedPhoto.observe(this){
-            if (it){
+        viewModel.mOnClickedPhoto.observe(this) {
+            if (it) {
                 viewModel.setOnClickPhoto(false)
                 val bundle = bundleOf(
                     "start_point" to "Mini_Control_Songs_Fragment",
@@ -260,7 +261,7 @@ class SongsFragment : BaseFragment<FragmentSongsBinding>() {
             binding.rcvSongsHomeFragment.layoutManager =
                 LinearLayoutManager(ApplicationClass.application, RecyclerView.VERTICAL, false)
             songAdapter = SongAdapter(object : OnItemClickListener<Song> {
-                override fun onItemClick(position: Int) {
+                override fun onItemClick(data: Song) {
                     /** Khi click vào 1 bài hát trên danh sách nhạc, ta sẽ gọi startForegroundService.
                      *
                      * Service được khởi tạo bằng cách gọi onCreate():
@@ -274,17 +275,32 @@ class SongsFragment : BaseFragment<FragmentSongsBinding>() {
                      * */
                     /** Sau đó điều hướng đến PlayerFragment() */
 
-                    val songs: Songs = Songs(it)
-                    val bundle = bundleOf(
-                        "start_point" to "Songs_Fragment",
-                        "songs" to songs,
-                        "position" to position
-                    )
-                    this@SongsFragment.findNavController().navigate(R.id.playerFragment, bundle)
+                    /** Lấy position của bài hát trong danh sách Full bài hát... */
+                    (it as MutableList<Song>).forEachIndexed { index: Int, value: Song ->
+                        if (value == data) {
+                            /** Gửi danh sách bài hát và index của bài hát được chọn... */
+                            val songs: Songs = Songs(it)
+                            val bundle = bundleOf(
+                                "start_point" to "Songs_Fragment",
+                                "songs" to songs,
+                                "position" to index
+                            )
+                            this@SongsFragment.findNavController()
+                                .navigate(R.id.playerFragment, bundle)
+                        }
+                    }
                 }
             })
             songAdapter.addData(it)
             binding.rcvSongsHomeFragment.adapter = songAdapter
+        }
+
+        handleSearchActionSongs()
+    }
+
+    private fun handleSearchActionSongs() {
+        searchAction = { newText ->
+            songAdapter.filter.filter(newText)
         }
     }
 
