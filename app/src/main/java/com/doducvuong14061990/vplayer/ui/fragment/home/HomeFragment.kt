@@ -161,7 +161,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>() {
     class ScreenSlidePagerAdapter(fa: FragmentActivity) : FragmentStateAdapter(fa) {
         val songFragment by lazy { SongsFragment.getInstance() }
         override fun getItemCount(): Int = NUM_PAGES
-        // abstract
 
         override fun createFragment(position: Int): Fragment {
             return when (position) {
